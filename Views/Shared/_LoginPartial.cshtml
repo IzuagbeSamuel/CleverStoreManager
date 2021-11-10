@@ -1,0 +1,38 @@
+@using Microsoft.AspNetCore.Identity
+@using CleverStoreManager.Models
+@inject SignInManager<CleverStoreManagerUser> SignInManager
+@inject UserManager<CleverStoreManagerUser> UserManager
+@using System.Security.Claims
+
+
+<ul class="navbar-nav">
+@if (User.Identity.IsAuthenticated)
+{
+    <li class="nav-item">
+        <div class="dropdown show">
+                <a  class="nav-link text-white dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" asp-area="" asp-action="Index" title="Manage" asp-controller="ManageAccount"><b>MY ACCOUNT</b></a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item" asp-area="" asp-action="Index" asp-controller="ManageAccount">Manage Account</a>
+                    <a class="dropdown-item" asp-area="" asp-action="Index" asp-controller="DashBoard">DashBoard</a>
+                    <a class="dropdown-item" asp-area="" asp-action="Index" asp-controller="Profile">Profile</a>
+                    <a class="dropdown-item" asp-area="" asp-action="Settings" asp-controller="Home">Settings</a>
+                </div>
+        </div>
+    </li>
+    <li class="nav-item">
+        @using (Html.BeginForm("LogOff", "Account"))
+        {
+            <input type="submit" class="btn btn-dark" value="Log out" />
+        }
+    </li>
+}
+else
+{
+    <li class="nav-item">
+        <a class="nav-link text-white btn btn-dark" asp-area="" asp-action="Index" asp-controller="Account">Get Started</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-white" asp-area="" asp-action="Login" asp-controller="Account">Login</a>
+    </li>
+}
+</ul>
