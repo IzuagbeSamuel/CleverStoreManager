@@ -29,6 +29,7 @@ namespace CleverStoreManager.Controllers
       private readonly SignInManager<CleverStoreManagerUser> _signInManager;
       private readonly ILogger<AccountController> _logger;
 
+      // Constructor
       public AccountController(UserManager<CleverStoreManagerUser> userManager, SignInManager<CleverStoreManagerUser> signInManager, CleverStoreManagerContext db, ILogger<AccountController> logger)
       {
          _userManager = userManager;
@@ -37,11 +38,13 @@ namespace CleverStoreManager.Controllers
          _logger = logger;
       }
 
+      // Get Register View
       public IActionResult Register()
       {
          return View();
       }
 
+      // Post Register Model
       [HttpPost]
       public async Task<IActionResult> Register(RegisterViewModel model)
       {
@@ -54,6 +57,7 @@ namespace CleverStoreManager.Controllers
                LastName = model.LastName,
                FullName = model.FullName,
                Address = model.Address,
+               PhoneNumber = model.PhoneNumber,
                AdditionalPhoneNumber = model.AdditionalPhoneNumber,
                DateAdded = DateTime.Now
             };
@@ -61,6 +65,7 @@ namespace CleverStoreManager.Controllers
          
             if (result.Succeeded)
             {
+               await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: true, lockoutOnFailure: false);
                return RedirectToAction("Business");
             }
             foreach (var error in result.Errors)
@@ -71,9 +76,14 @@ namespace CleverStoreManager.Controllers
          return View();
       }
 
+      public IActionResult Business()
+      {
+         return View();
+      }
+
+      // Post  Business Model
       [HttpPost]
-      [Authorize]
-      public IActionResult Business(CleverStoreManagerBusiness model)
+      public async Task<IActionResult> Business(CleverStoreManagerBusiness model)
       {
          CleverStoreManagerBusiness business = new CleverStoreManagerBusiness();
 
@@ -92,18 +102,53 @@ namespace CleverStoreManager.Controllers
          business.NoOfEmployee = model.NoOfEmployee;
          business.CACRegNumber = model.CACRegNumber;
          business.TaxIDNumber = model.TaxIDNumber;
-         business.DateAdded = model.DateAdded;
+         business.DateAdded = DateTime.Now;
+
+         var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+         var currentAgent = await _userManager.FindByIdAsync(userId);
+
+         business.Agent = currentAgent;
+
          _db.CleverStoreManagerBusinesses.Add(business);
          _db.SaveChanges();
          ViewBag.Message = "Record added successfully!";
          return RedirectToAction("Payment");
       }
 
+      public IActionResult Payment()
+      {
+         return View();
+      }
+
+      // Post Payment Model
+      [HttpPost]
+      public async Task<IActionResult> Payment(CleverStoreManagerPayment model)
+      {
+         CleverStoreManagerPayment payment = new CleverStoreManagerPayment();
+
+         payment.AccountName = model.AccountName;
+         payment.AccountNumber = model.AccountNumber;
+         payment.BankName = model.BankName;
+         payment.DateAdded = DateTime.Now;
+         
+         var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+         var currentAgent = await _userManager.FindByIdAsync(userId);
+
+         payment.Agent = currentAgent;
+
+         _db.CleverStoreManagerPayments.Add(payment);
+         _db.SaveChanges();
+         ViewBag.PaymentMessage = "Record added successfully!";
+         return RedirectToAction("Login");
+      }
+
+      // Get Login View
       public IActionResult Login() 
       {
          return View();
       }
 
+      // Post Login Model
       [HttpPost]
       public async Task<ActionResult> Login(LoginViewModel model, string returnUrl = null)
       {
@@ -119,6 +164,7 @@ namespace CleverStoreManager.Controllers
          }
       }
 
+      // Post LogOff Model
       [HttpPost]
       public async Task<ActionResult> LogOff(string returnUrl = null)
       {

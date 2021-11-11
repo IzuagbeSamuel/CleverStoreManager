@@ -9,6 +9,13 @@ namespace CleverStoreManager.Models
 
       public DbSet<CleverStoreManagerPayment> CleverStoreManagerPayments { get; set; }
 
+      public DbSet<CleverStoreManagerProduct> CleverStoreManagerProducts { get; set; }
+
+      public DbSet<CleverStoreManagerCategory> CleverStoreManagerCategories { get; set; }
+
+      public DbSet<CleverStoreManagerSeller> CleverStoreManagerSellers { get; set; }
+
+      public DbSet<CleverStoreManagerCustomer> CleverStoreManagerCustomers { get; set; }
 
       public CleverStoreManagerContext(DbContextOptions options) : base(options) { }
 

@@ -3,14 +3,16 @@ using System;
 using CleverStoreManager.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CleverStoreManager.Migrations
 {
     [DbContext(typeof(CleverStoreManagerContext))]
-    partial class CleverStoreManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20211111140754_User_PaymentId")]
+    partial class User_PaymentId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,20 +92,6 @@ namespace CleverStoreManager.Migrations
                     b.ToTable("CleverStoreManagerBusinesses");
                 });
 
-            modelBuilder.Entity("CleverStoreManager.Models.CleverStoreManagerCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CleverStoreManagerCategories");
-                });
-
             modelBuilder.Entity("CleverStoreManager.Models.CleverStoreManagerPayment", b =>
                 {
                     b.Property<int>("Id")
@@ -130,89 +118,6 @@ namespace CleverStoreManager.Migrations
                     b.HasIndex("AgentId");
 
                     b.ToTable("CleverStoreManagerPayments");
-                });
-
-            modelBuilder.Entity("CleverStoreManager.Models.CleverStoreManagerProduct", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Barcode")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<int?>("CleverStoreManagerCategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CleverStoreManagerSellerId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CostPrice")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("DiscountPrice")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("ExpiringDate")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("Label")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("MadeDate")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("Quantity")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("SalesPrice")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("Size")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("StockKeepingUnit")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("Weight")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CleverStoreManagerCategoryId");
-
-                    b.HasIndex("CleverStoreManagerSellerId");
-
-                    b.ToTable("CleverStoreManagerProducts");
-                });
-
-            modelBuilder.Entity("CleverStoreManager.Models.CleverStoreManagerSeller", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Address")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("BusinessName")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("EmailAddress")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CleverStoreManagerSellers");
                 });
 
             modelBuilder.Entity("CleverStoreManager.Models.CleverStoreManagerUser", b =>
@@ -446,21 +351,6 @@ namespace CleverStoreManager.Migrations
                     b.Navigation("Agent");
                 });
 
-            modelBuilder.Entity("CleverStoreManager.Models.CleverStoreManagerProduct", b =>
-                {
-                    b.HasOne("CleverStoreManager.Models.CleverStoreManagerCategory", "CleverStoreManagerCategory")
-                        .WithMany("CleverStoreManagerProducts")
-                        .HasForeignKey("CleverStoreManagerCategoryId");
-
-                    b.HasOne("CleverStoreManager.Models.CleverStoreManagerSeller", "CleverStoreManagerSeller")
-                        .WithMany("CleverStoreManagerProducts")
-                        .HasForeignKey("CleverStoreManagerSellerId");
-
-                    b.Navigation("CleverStoreManagerCategory");
-
-                    b.Navigation("CleverStoreManagerSeller");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -510,16 +400,6 @@ namespace CleverStoreManager.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("CleverStoreManager.Models.CleverStoreManagerCategory", b =>
-                {
-                    b.Navigation("CleverStoreManagerProducts");
-                });
-
-            modelBuilder.Entity("CleverStoreManager.Models.CleverStoreManagerSeller", b =>
-                {
-                    b.Navigation("CleverStoreManagerProducts");
                 });
 #pragma warning restore 612, 618
         }

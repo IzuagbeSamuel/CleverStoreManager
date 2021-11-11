@@ -3,14 +3,16 @@ using System;
 using CleverStoreManager.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CleverStoreManager.Migrations
 {
     [DbContext(typeof(CleverStoreManagerContext))]
-    partial class CleverStoreManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20211111163259_Seller_Details")]
+    partial class Seller_Details
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -144,9 +146,6 @@ namespace CleverStoreManager.Migrations
                     b.Property<int?>("CleverStoreManagerCategoryId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CleverStoreManagerSellerId")
-                        .HasColumnType("int");
-
                     b.Property<string>("CostPrice")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
@@ -186,8 +185,6 @@ namespace CleverStoreManager.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CleverStoreManagerCategoryId");
-
-                    b.HasIndex("CleverStoreManagerSellerId");
 
                     b.ToTable("CleverStoreManagerProducts");
                 });
@@ -298,6 +295,27 @@ namespace CleverStoreManager.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("CleverStoreManager.Models.Products_Seller", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("CleverStoreManagerProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CleverStoreManagerSellerId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CleverStoreManagerProductId");
+
+                    b.HasIndex("CleverStoreManagerSellerId");
+
+                    b.ToTable("Products_Sellers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -452,11 +470,24 @@ namespace CleverStoreManager.Migrations
                         .WithMany("CleverStoreManagerProducts")
                         .HasForeignKey("CleverStoreManagerCategoryId");
 
-                    b.HasOne("CleverStoreManager.Models.CleverStoreManagerSeller", "CleverStoreManagerSeller")
-                        .WithMany("CleverStoreManagerProducts")
-                        .HasForeignKey("CleverStoreManagerSellerId");
-
                     b.Navigation("CleverStoreManagerCategory");
+                });
+
+            modelBuilder.Entity("CleverStoreManager.Models.Products_Seller", b =>
+                {
+                    b.HasOne("CleverStoreManager.Models.CleverStoreManagerProduct", "CleverStoreManagerProduct")
+                        .WithMany("Products_Seller")
+                        .HasForeignKey("CleverStoreManagerProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CleverStoreManager.Models.CleverStoreManagerSeller", "CleverStoreManagerSeller")
+                        .WithMany("Products_Seller")
+                        .HasForeignKey("CleverStoreManagerSellerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CleverStoreManagerProduct");
 
                     b.Navigation("CleverStoreManagerSeller");
                 });
@@ -517,9 +548,14 @@ namespace CleverStoreManager.Migrations
                     b.Navigation("CleverStoreManagerProducts");
                 });
 
+            modelBuilder.Entity("CleverStoreManager.Models.CleverStoreManagerProduct", b =>
+                {
+                    b.Navigation("Products_Seller");
+                });
+
             modelBuilder.Entity("CleverStoreManager.Models.CleverStoreManagerSeller", b =>
                 {
-                    b.Navigation("CleverStoreManagerProducts");
+                    b.Navigation("Products_Seller");
                 });
 #pragma warning restore 612, 618
         }

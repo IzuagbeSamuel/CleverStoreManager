@@ -7,7 +7,7 @@ namespace CleverStoreManager.Models
    {
       public int Id { get; set; }
 
-      public string CompanyId { 
+      public string CompanyMadeId { 
          get {
             return "CSM/B/2021"+ Id;
          }
