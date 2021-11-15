@@ -20,5 +20,6 @@ namespace CleverStoreManager.Models
       public string PhoneNumber { get; set; }
 
       public virtual ICollection<CleverStoreManagerProduct> CleverStoreManagerProducts { get; set; }
+      public virtual CleverStoreManagerUser Agent { get; set; }
    }
 }

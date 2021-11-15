@@ -34,6 +34,7 @@ namespace CleverStoreManager.Models
 
       public string Weight { get; set; }
 
+      public virtual CleverStoreManagerUser Agent { get; set; }
       public virtual CleverStoreManagerCategory CleverStoreManagerCategory { get; set; }
       public virtual CleverStoreManagerSeller CleverStoreManagerSeller { get; set; }
    }

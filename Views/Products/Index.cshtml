@@ -1,0 +1,197 @@
+@{
+   Layout = "_DashBoard";
+}
+
+@using CleverStoreManager.Models
+@using CleverStoreManager.Controllers
+@model IEnumerable<CleverStoreManager.Models.CleverStoreManagerProduct>
+
+<div class="content-wrapper">
+   <section class="content-header">
+      <div class="container-fluid">
+         <div class="row mb-2">
+            <div class="col-sm-6">
+               <h1>Products Table</h1>
+            </div>
+            <div class="col-sm-6">
+               <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item"><a asp-area="" asp-action="Index" asp-controller="DashBoard">DashBoard
+                        Home</a></li>
+                  <li class="breadcrumb-item active">Products Table</li>
+               </ol>
+            </div>
+         </div>
+      </div>
+   </section>
+   <section class="content">
+      <div class="container-fluid">
+         <div class="row">
+            <div class="col-12">
+               <div class="card">
+                  <div class="card-header">
+                     <h2 class="card-title">Products DataTable</h1>
+                  </div>
+                  <div class="card-body">
+                     <div class="row">
+                        <div class="col-sm-2">
+                           <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#exampleModalLong">Add Product</button>
+                        </div>
+                        <div class="col-md-10">
+                           <div class="alert alert-info alert-dismissable">
+                              <button type="button" class="close" data-dismiss="alert"
+                                 aria-hidden="true">&times;</button><strong><i class="fas fa-info-circle"></i> Hello
+                                 Agent!</strong> Click on the Product name for more details about that particular Product!
+                           </div>
+                        </div>
+                     </div>
+                     <table id="example1" class="table table-bordered table-hover table-striped">
+                        <thead>
+                           <tr>
+                              <th>Barcode</th>
+                              <th>Name</th>
+                              <th>Label</th>
+                              <th>ExpiringDate</th>
+                              <th>Quantity</th>
+                              <th>SalesPrice</th>
+                              <th>CostPrice</th>
+                              <th>DiscountPrice</th>
+                              <th>Weight</th>
+                           </tr>
+                        </thead>
+
+                        @foreach (CleverStoreManagerProduct product in Model)
+                        {
+                           <tbody>
+                              <tr>
+                                 <td>@product.Barcode</td>
+                                 <td>@product.Name</td>
+                                 <td>@product.Label</td>
+                                 <td>@product.ExpiringDate</td>
+                                 <td>@product.Quantity</td>
+                                 <td><span>&#8358;</span>@product.SalesPrice</td> 
+                                 <td><span>&#8358;</span>@product.CostPrice</td>
+                                 <td><span>&#8358;</span>@product.DiscountPrice</td>
+                                 <td>@product.Weight</td>
+                              </tr>
+                           </tbody>
+                        }
+                     </table>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+</div>
+
+<!-- Model Call -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLongTitle">Add Product</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        @using (Html.BeginForm("Create", "Products", FormMethod.Post))
+        {
+           <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+           <div class="form-group text-center">
+               <label for="Barcode" id="Barcode" name="Barcode" class="control-label">Barcode</label>
+               <div class="col-sm-12">
+                  <input id="Barcode" name="Barcode" type="number" class="form-control" />
+               </div>
+           </div>
+           <div class="row">
+               <div class="col-md-6">
+                  <div class="form-group">
+                     <label for="Name" id="Name" name="Name" class="control-label">Name</label>
+                     <div class="col-sm-12">
+                        <input id="Name" name="Name" type="text" class="form-control" />
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="Label" id="Label" name="Label" class="control-label">Label</label>
+                     <div class="col-sm-12">
+                        <input id="Label" name="Label" type="text" class="form-control" />
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="Description" id="Description" name="Description" class="control-label">Description</label>
+                     <div class="col-sm-12">
+                        <textarea id="Description" name="Description" class="form-control"></textarea>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="MadeDate" id="MadeDate" name="MadeDate" class="control-label">MadeDate</label>
+                     <div class="col-sm-12">
+                        <input id="MadeDate" name="MadeDate" type="date" class="form-control" />
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="ExpiringDate" id="ExpiringDate" name="ExpiringDate" class="control-label">ExpiringDate</label>
+                     <div class="col-sm-12">
+                        <input id="ExpiringDate" name="ExpiringDate" type="date" class="form-control" />
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="Size" id="Size" name="Size" class="control-label">Size</label>
+                     <div class="col-sm-12">
+                        <input id="Size" name="Size" type="text" class="form-control" />
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-6">
+                  <div class="form-group">
+                     <label for="Quantity" id="Quantity" name="Quantity" class="control-label">Quantity</label>
+                     <div class="col-sm-12">
+                        <input id="Quantity" name="Quantity" type="number" class="form-control" />
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="SalesPrice" id="SalesPrice" name="SalesPrice" class="control-label">SalesPrice</label>
+                     <div class="col-sm-12">
+                        <input id="SalesPrice" name="SalesPrice" type="number" class="form-control" />
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="CostPrice" id="CostPrice" name="CostPrice" class="control-label">CostPrice</label>
+                     <div class="col-sm-12">
+                        <input id="CostPrice" name="CostPrice" type="number" class="form-control" />
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="DiscountPrice" id="DiscountPrice" name="DiscountPrice" class="control-label">DiscountPrice</label>
+                     <div class="col-sm-12">
+                        <input id="DiscountPrice" name="DiscountPrice" type="number" class="form-control" />
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="StockKeepingUnit" id="StockKeepingUnit" name="StockKeepingUnit" class="control-label">StockKeepingUnit</label>
+                     <div class="col-sm-12">
+                        <input id="StockKeepingUnit" name="StockKeepingUnit" type="number" class="form-control" />
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="Weight" id="Weight" name="Weight" class="control-label">Weight</label>
+                     <div class="col-sm-12">
+                        <input id="Weight" name="Weight" type="number" class="form-control" />
+                     </div>
+                  </div>
+               </div>
+           </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-outline-dark btn-lg" data-dismiss="modal">Close</button>
+               <button type="submit" class="btn btn-outline-primary btn-lg">Save</button>
+            </div>
+         }
+      </div>
+    </div>
+  </div>
+</div>
+
+@section Scripts {
+   <partial name="_ValidationScriptsPartial" />
+}

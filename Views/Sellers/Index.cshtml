@@ -1,0 +1,127 @@
+@{
+   Layout = "_DashBoard";
+}
+
+@using CleverStoreManager.Models
+@using CleverStoreManager.Controllers
+@model IEnumerable<CleverStoreManager.Models.CleverStoreManagerSeller>
+
+<div class="content-wrapper">
+   <section class="content-header">
+      <div class="container-fluid">
+         <div class="row mb-2">
+            <div class="col-sm-6">
+               <h1>Sellers Table</h1>
+            </div>
+            <div class="col-sm-6">
+               <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item"><a asp-area="" asp-action="Index" asp-controller="DashBoard">DashBoard
+                        Home</a></li>
+                  <li class="breadcrumb-item active">Sellers Table</li>
+               </ol>
+            </div>
+         </div>
+      </div>
+   </section>
+   <section class="content">
+      <div class="container-fluid">
+         <div class="row">
+            <div class="col-12">
+               <div class="card">
+                  <div class="card-header">
+                     <h2 class="card-title">Sellers DataTable</h1>
+                  </div>
+                  <div class="card-body">
+                     <div class="row">
+                        <div class="col-sm-2">
+                           <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#exampleModalLong">Add Seller</button>
+                        </div>
+                        <div class="col-md-10">
+                           <div class="alert alert-info alert-dismissable">
+                              <button type="button" class="close" data-dismiss="alert"
+                                 aria-hidden="true">&times;</button><strong><i class="fas fa-info-circle"></i> Hello
+                                 Agent!</strong> Click on the Seller name for more details about that particular Sellers!
+                           </div>
+                        </div>
+                     </div>
+                     <table id="example1" class="table table-bordered table-hover table-striped">
+                        <thead>
+                           <tr>
+                              <th>Business Name</th>
+                              <th>Address</th>
+                              <th>Email Address</th>
+                              <th>PhoneNumber</th>
+                           </tr>
+                        </thead>
+
+                        @foreach (CleverStoreManagerSeller seller in Model)
+                        {
+                           <tbody>
+                              <tr>
+                                 <td>@seller.BusinessName</td>
+                                 <td>@seller.Address</td>
+                                 <td>@seller.EmailAddress</td>
+                                 <td>@seller.PhoneNumber</td>
+                              </tr>
+                           </tbody>
+                        }
+                     </table>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+</div>
+
+<!-- Model Call -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLongTitle">Add Seller</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        @using (Html.BeginForm("Create", "Sellers", FormMethod.Post))
+        {
+           <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+           <div class="form-group">
+               <label for="BusinessName" id="BusinessName" name="BusinessName" class="control-label">Business Name</label>
+               <div class="col-sm-12">
+                  <input id="BusinessName" name="BusinessName" type="text" class="form-control" />
+               </div>
+           </div>
+           <div class="form-group">
+               <label for="Address" id="Address" name="Address" class="control-label">Address</label>
+               <div class="col-sm-12">
+                  <input id="Address" name="Address" type="text" class="form-control" />
+               </div>
+           </div>
+           <div class="form-group">
+               <label for="EmailAddress" id="EmailAddress" name="EmailAddress" class="control-label">EmailAddress</label>
+               <div class="col-sm-12">
+                  <input id="EmailAddress" name="EmailAddress" type="email" class="form-control" />
+               </div>
+           </div>
+           <div class="form-group text-center">
+               <label for="PhoneNumber" id="PhoneNumber" name="PhoneNumber" class="control-label">PhoneNumber</label>
+               <div class="col-sm-12">
+                  <input id="PhoneNumber" name="PhoneNumber" type="number" class="form-control" />
+               </div>
+           </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-outline-dark btn-lg" data-dismiss="modal">Close</button>
+               <button type="submit" class="btn btn-outline-primary btn-lg">Save</button>
+            </div>
+         }
+      </div>
+    </div>
+  </div>
+</div>
+
+@section Scripts {
+   <partial name="_ValidationScriptsPartial" />
+}

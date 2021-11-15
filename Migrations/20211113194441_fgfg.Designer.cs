@@ -3,14 +3,16 @@ using System;
 using CleverStoreManager.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CleverStoreManager.Migrations
 {
     [DbContext(typeof(CleverStoreManagerContext))]
-    partial class CleverStoreManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20211113194441_fgfg")]
+    partial class fgfg
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -235,9 +237,6 @@ namespace CleverStoreManager.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("AgentId")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
-
                     b.Property<string>("BusinessName")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
@@ -248,8 +247,6 @@ namespace CleverStoreManager.Migrations
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AgentId");
 
                     b.ToTable("CleverStoreManagerSellers");
                 });
@@ -504,15 +501,6 @@ namespace CleverStoreManager.Migrations
                     b.Navigation("CleverStoreManagerCategory");
 
                     b.Navigation("CleverStoreManagerSeller");
-                });
-
-            modelBuilder.Entity("CleverStoreManager.Models.CleverStoreManagerSeller", b =>
-                {
-                    b.HasOne("CleverStoreManager.Models.CleverStoreManagerUser", "Agent")
-                        .WithMany()
-                        .HasForeignKey("AgentId");
-
-                    b.Navigation("Agent");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
