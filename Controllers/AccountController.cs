@@ -55,7 +55,6 @@ namespace CleverStoreManager.Controllers
                Email = model.Email,
                FirstName = model.FirstName,
                LastName = model.LastName,
-               FullName = model.FullName,
                Address = model.Address,
                PhoneNumber = model.PhoneNumber,
                AdditionalPhoneNumber = model.AdditionalPhoneNumber,
@@ -83,7 +82,7 @@ namespace CleverStoreManager.Controllers
 
       // Post  Business Model
       [HttpPost]
-      public async Task<IActionResult> Business(CleverStoreManagerBusiness model)
+      public async Task<IActionResult> Business(CleverStoreManagerBusiness model, string CompanyLogo)
       {
          CleverStoreManagerBusiness business = new CleverStoreManagerBusiness();
 

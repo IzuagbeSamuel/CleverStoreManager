@@ -10,7 +10,11 @@ namespace CleverStoreManager.Models
 
       public string LastName { get; set; }
 
-      public string FullName { get; set; }
+      public string FullName {
+         get {
+            return FirstName + " " + LastName;
+         }
+      }
 
       public string Address { get; set; }
 

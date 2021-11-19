@@ -15,6 +15,8 @@ namespace CleverStoreManager.Models
 
       public string CompanyName { get; set; }
 
+      public byte[] CompanyLogo { get; set; }
+
       public string Address1 { get; set; }
 
       public string Address2 { get; set; }

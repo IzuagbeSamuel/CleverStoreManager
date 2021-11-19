@@ -8,6 +8,7 @@ namespace CleverStoreManager.Models
       public CleverStoreManagerProduct() 
       {
          this.CleverStoreManagerSales = new HashSet<CleverStoreManagerSale>();
+         this.CleverStoreManagerPurchases = new HashSet<CleverStoreManagerPurchase>();
       }
 
       public int Id { get; set; }
@@ -43,5 +44,6 @@ namespace CleverStoreManager.Models
       public virtual CleverStoreManagerSeller CleverStoreManagerSeller { get; set; }
 
       public virtual ICollection<CleverStoreManagerSale> CleverStoreManagerSales { get; set; }
+      public virtual ICollection<CleverStoreManagerPurchase> CleverStoreManagerPurchases { get; set; }
    }
 }

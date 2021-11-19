@@ -19,6 +19,8 @@ namespace CleverStoreManager.Models
 
       public DbSet<CleverStoreManagerSale> CleverStoreManagerSales { get; set; }
 
+      public DbSet<CleverStoreManagerPurchase> CleverStoreManagerPurchases { get; set; }
+
       public CleverStoreManagerContext(DbContextOptions options) : base(options) { }
 
       protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -32,6 +32,11 @@ namespace CleverStoreManager.Controllers
          }
          var currentUser = await _userManager.FindByIdAsync(userId);
          ViewBag.Company = _db.CleverStoreManagerBusinesses.Where(entry => entry.Agent.Id == currentUser.Id).ToList();
+         ViewBag.Agent = _db.Users.Where(entry => entry.Id == currentUser.Id).ToList();
+         foreach(CleverStoreManagerUser user in ViewBag.Agent) 
+         {
+            ViewBag.FullName = user.FullName;
+         }
          foreach(CleverStoreManagerBusiness business in ViewBag.Company)
          {
             ViewBag.Name = business.CompanyName;
