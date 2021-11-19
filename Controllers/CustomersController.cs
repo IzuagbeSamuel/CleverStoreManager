@@ -22,7 +22,7 @@ using CleverStoreManager.Models;
 
 namespace CleverStoreManager.Controllers
 {
-   public class ProductsController : Controller
+   public class CustomersController : Controller
    {
       private readonly CleverStoreManagerContext _db;
       private readonly UserManager<CleverStoreManagerUser> _userManager;
@@ -30,7 +30,7 @@ namespace CleverStoreManager.Controllers
       private readonly ILogger<AccountController> _logger;
 
       // Constructor
-      public ProductsController(UserManager<CleverStoreManagerUser> userManager, SignInManager<CleverStoreManagerUser> signInManager, CleverStoreManagerContext db, ILogger<AccountController> logger)
+      public CustomersController(UserManager<CleverStoreManagerUser> userManager, SignInManager<CleverStoreManagerUser> signInManager, CleverStoreManagerContext db, ILogger<AccountController> logger)
       {
          _userManager = userManager;
          _signInManager = signInManager;
@@ -38,8 +38,7 @@ namespace CleverStoreManager.Controllers
          _logger = logger;
       }
 
-      
-      public async Task<IActionResult> Index() 
+      public async Task<IActionResult> Index()
       {
          var agentId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
          if(agentId == null)
@@ -47,38 +46,27 @@ namespace CleverStoreManager.Controllers
             return View();
          }
          var currentAgent = await _userManager.FindByIdAsync(agentId);
-         var agentProducts = _db.CleverStoreManagerProducts.Where(entry => entry.Agent.Id == currentAgent.Id).ToList();
-         if(agentProducts == null)
-         {
-            return View();
-         }
-         return View(agentProducts);
+         var agentCustomers = _db.CleverStoreManagerCustomers.Where(entry => entry.Agent.Id == currentAgent.Id).ToList();
+         return View(agentCustomers);
       }
 
       [HttpPost]
-      public async Task<IActionResult> Create(string Barcode, string Name, string Label, string Description, string MadeDate, string ExpiringDate, string Size, string Quantity, string SalesPrice, string CostPrice, string DiscountPrice, string StockKeepingUnit, string Weight)
+      public async Task<IActionResult> Create(string FirstName, string MiddleName, string LastName, string PhoneNumber, string EmailAddress, string Address) 
       {
-         CleverStoreManagerProduct product = new CleverStoreManagerProduct();
-         product.Barcode = Barcode;
-         product.Name = Name;
-         product.Label = Label;
-         product.Description = Description;
-         product.MadeDate = MadeDate;
-         product.ExpiringDate = ExpiringDate;
-         product.Size = Size;
-         product.Quantity = Quantity;
-         product.SalesPrice = SalesPrice;
-         product.CostPrice = CostPrice;
-         product.DiscountPrice = DiscountPrice;
-         product.StockKeepingUnit = StockKeepingUnit;
-         product.Weight = Weight;
+         CleverStoreManagerCustomer customer = new CleverStoreManagerCustomer();
+         customer.FirstName = FirstName;
+         customer.MiddleName = MiddleName;
+         customer.LastName = LastName;
+         customer.PhoneNumber = PhoneNumber;
+         customer.EmailAddress = EmailAddress;
+         customer.Address = Address;
 
          var agentId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
          var currentAgent = await _userManager.FindByIdAsync(agentId);
 
-         product.Agent = currentAgent;
+         customer.Agent = currentAgent;
 
-         _db.CleverStoreManagerProducts.Add(product);
+         _db.CleverStoreManagerCustomers.Add(customer);
          _db.SaveChanges();
          return RedirectToAction("Index");
       }

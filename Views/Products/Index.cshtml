@@ -44,37 +44,59 @@
                            </div>
                         </div>
                      </div>
-                     <table id="example1" class="table table-bordered table-hover table-striped">
+                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                            <tr>
+                              <th>Id</th>
                               <th>Barcode</th>
                               <th>Name</th>
                               <th>Label</th>
                               <th>ExpiringDate</th>
+                              <th>Size</th>
                               <th>Quantity</th>
                               <th>SalesPrice</th>
                               <th>CostPrice</th>
-                              <th>DiscountPrice</th>
-                              <th>Weight</th>
                            </tr>
                         </thead>
-
-                        @foreach (CleverStoreManagerProduct product in Model)
-                        {
-                           <tbody>
+                        <tbody>
+                           @foreach (CleverStoreManagerProduct product in Model)
+                           {
                               <tr>
+                                 <td>@product.Id</td>
                                  <td>@product.Barcode</td>
                                  <td>@product.Name</td>
                                  <td>@product.Label</td>
                                  <td>@product.ExpiringDate</td>
-                                 <td>@product.Quantity</td>
+                                 <td>@product.Size</td>
+                                 @{
+                                    int quantity = int.Parse(@product.Quantity);
+                                    if(quantity < 50)
+                                    {
+                                       <td class="bg-warning"><i class="fas fa-exclamation-triangle"></i> @product.Quantity <br> <span class="text-white">Low Product Quantity</span></td>
+                                    }
+                                    else
+                                    {
+                                       <td>@product.Quantity</td>
+                                    }
+                                 }
                                  <td><span>&#8358;</span>@product.SalesPrice</td> 
                                  <td><span>&#8358;</span>@product.CostPrice</td>
-                                 <td><span>&#8358;</span>@product.DiscountPrice</td>
-                                 <td>@product.Weight</td>
                               </tr>
-                           </tbody>
-                        }
+                           }
+                        </tbody>
+                        <tfoot>
+                              <tr>
+                                 <th>Barcode</th>
+                                 <th>Name</th>
+                                 <th>Label</th>
+                                 <th>ExpiringDate</th>
+                                 <th>Quantity</th>
+                                 <th>SalesPrice</th>
+                                 <th>CostPrice</th>
+                                 <th>DiscountPrice</th>
+                                 <th>Weight</th>
+                              </tr>
+                           </tfoot>
                      </table>
                   </div>
                </div>

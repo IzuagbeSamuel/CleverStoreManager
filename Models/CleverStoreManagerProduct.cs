@@ -5,6 +5,10 @@ namespace CleverStoreManager.Models
 {
    public class CleverStoreManagerProduct
    {
+      public CleverStoreManagerProduct() 
+      {
+         this.CleverStoreManagerSales = new HashSet<CleverStoreManagerSale>();
+      }
 
       public int Id { get; set; }
 
@@ -37,5 +41,7 @@ namespace CleverStoreManager.Models
       public virtual CleverStoreManagerUser Agent { get; set; }
       public virtual CleverStoreManagerCategory CleverStoreManagerCategory { get; set; }
       public virtual CleverStoreManagerSeller CleverStoreManagerSeller { get; set; }
+
+      public virtual ICollection<CleverStoreManagerSale> CleverStoreManagerSales { get; set; }
    }
 }

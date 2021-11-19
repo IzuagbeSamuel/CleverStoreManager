@@ -31,6 +31,11 @@ namespace CleverStoreManager.Controllers
             return View();
          }
          var currentUser = await _userManager.FindByIdAsync(userId);
+         ViewBag.Company = _db.CleverStoreManagerBusinesses.Where(entry => entry.Agent.Id == currentUser.Id).ToList();
+         foreach(CleverStoreManagerBusiness business in ViewBag.Company)
+         {
+            ViewBag.Name = business.CompanyName;
+         }
          var userProducts = _db.CleverStoreManagerProducts.Where(entry => entry.Agent.Id == currentUser.Id).ToList();
          return View(userProducts);
       }

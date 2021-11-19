@@ -113,6 +113,9 @@ namespace CleverStoreManager.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
+                    b.Property<string>("AgentId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
                     b.Property<string>("EmailAddress")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
@@ -129,6 +132,8 @@ namespace CleverStoreManager.Migrations
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AgentId");
 
                     b.ToTable("CleverStoreManagerCustomers");
                 });
@@ -224,6 +229,35 @@ namespace CleverStoreManager.Migrations
                     b.HasIndex("CleverStoreManagerSellerId");
 
                     b.ToTable("CleverStoreManagerProducts");
+                });
+
+            modelBuilder.Entity("CleverStoreManager.Models.CleverStoreManagerSale", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("AgentId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.Property<int>("CleverStoreManagerCustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CleverStoreManagerProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Quantity")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AgentId");
+
+                    b.HasIndex("CleverStoreManagerCustomerId");
+
+                    b.HasIndex("CleverStoreManagerProductId");
+
+                    b.ToTable("CleverStoreManagerSales");
                 });
 
             modelBuilder.Entity("CleverStoreManager.Models.CleverStoreManagerSeller", b =>
@@ -476,6 +510,15 @@ namespace CleverStoreManager.Migrations
                     b.Navigation("Agent");
                 });
 
+            modelBuilder.Entity("CleverStoreManager.Models.CleverStoreManagerCustomer", b =>
+                {
+                    b.HasOne("CleverStoreManager.Models.CleverStoreManagerUser", "Agent")
+                        .WithMany()
+                        .HasForeignKey("AgentId");
+
+                    b.Navigation("Agent");
+                });
+
             modelBuilder.Entity("CleverStoreManager.Models.CleverStoreManagerPayment", b =>
                 {
                     b.HasOne("CleverStoreManager.Models.CleverStoreManagerUser", "Agent")
@@ -504,6 +547,31 @@ namespace CleverStoreManager.Migrations
                     b.Navigation("CleverStoreManagerCategory");
 
                     b.Navigation("CleverStoreManagerSeller");
+                });
+
+            modelBuilder.Entity("CleverStoreManager.Models.CleverStoreManagerSale", b =>
+                {
+                    b.HasOne("CleverStoreManager.Models.CleverStoreManagerUser", "Agent")
+                        .WithMany()
+                        .HasForeignKey("AgentId");
+
+                    b.HasOne("CleverStoreManager.Models.CleverStoreManagerCustomer", "CleverStoreManagerCustomer")
+                        .WithMany("CleverStoreManagerSales")
+                        .HasForeignKey("CleverStoreManagerCustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CleverStoreManager.Models.CleverStoreManagerProduct", "CleverStoreManagerProduct")
+                        .WithMany("CleverStoreManagerSales")
+                        .HasForeignKey("CleverStoreManagerProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Agent");
+
+                    b.Navigation("CleverStoreManagerCustomer");
+
+                    b.Navigation("CleverStoreManagerProduct");
                 });
 
             modelBuilder.Entity("CleverStoreManager.Models.CleverStoreManagerSeller", b =>
@@ -569,6 +637,16 @@ namespace CleverStoreManager.Migrations
             modelBuilder.Entity("CleverStoreManager.Models.CleverStoreManagerCategory", b =>
                 {
                     b.Navigation("CleverStoreManagerProducts");
+                });
+
+            modelBuilder.Entity("CleverStoreManager.Models.CleverStoreManagerCustomer", b =>
+                {
+                    b.Navigation("CleverStoreManagerSales");
+                });
+
+            modelBuilder.Entity("CleverStoreManager.Models.CleverStoreManagerProduct", b =>
+                {
+                    b.Navigation("CleverStoreManagerSales");
                 });
 
             modelBuilder.Entity("CleverStoreManager.Models.CleverStoreManagerSeller", b =>

@@ -1,0 +1,145 @@
+@{
+   Layout = "_DashBoard";
+}
+
+@using CleverStoreManager.Models
+@using CleverStoreManager.Controllers
+@model IEnumerable<CleverStoreManager.Models.CleverStoreManagerCustomer>
+
+<div class="content-wrapper">
+   <section class="content-header">
+      <div class="container-fluid">
+         <div class="row mb-2">
+            <div class="col-sm-6">
+               <h1>Customers Table</h1>
+            </div>
+            <div class="col-sm-6">
+               <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item"><a asp-area="" asp-action="Index" asp-controller="DashBoard">DashBoard
+                        Home</a></li>
+                  <li class="breadcrumb-item active">Customers Table</li>
+               </ol>
+            </div>
+         </div>
+      </div>
+   </section>
+   <section class="content">
+      <div class="container-fluid">
+         <div class="row">
+            <div class="col-12">
+               <div class="card">
+                  <div class="card-header">
+                     <h2 class="card-title">Customers DataTable</h1>
+                  </div>
+                  <div class="card-body">
+                     <div class="row">
+                        <div class="col-sm-2">
+                           <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#exampleModalLong">Add</button>
+                        </div>
+                        <div class="col-md-10">
+                           <div class="alert alert-info alert-dismissable">
+                              <button type="button" class="close" data-dismiss="alert"
+                                 aria-hidden="true">&times;</button><strong><i class="fas fa-info-circle"></i> Hello
+                                 Agent!</strong> Click on the Customer name for more details about that particular Customer!
+                           </div>
+                        </div>
+                     </div>
+                     <table id="example1" class="table table-bordered table-hover table-striped">
+                        <thead>
+                           <tr>
+                              <th>Id</th>
+                              <th>FirstName</th>
+                              <th>Middle</th>
+                              <th>LastName</th>
+                              <th>EmailAddress</th>
+                              <th>Address</th>
+                              <th>PhoneNumber</th>
+                           </tr>
+                        </thead>
+
+                        @foreach (CleverStoreManagerCustomer customer in Model)
+                        {
+                           <tbody>
+                              <tr>
+                                 <td>@customer.Id</td>
+                                 <td>@customer.FirstName</td>
+                                 <td>@customer.MiddleName</td>
+                                 <td>@customer.LastName</td>
+                                 <td>@customer.EmailAddress</td>
+                                 <td>@customer.Address</td>
+                                 <td>@customer.PhoneNumber</td>
+                              </tr>
+                           </tbody>
+                        }
+                     </table>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+</div>
+
+<!-- Model Call -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLongTitle">Add Customers</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        @using (Html.BeginForm("Create", "Customers", FormMethod.Post))
+        {
+           <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+           <div class="form-group">
+               <label for="FirstName" id="FirstName" name="FirstName" class="control-label">FirstName</label>
+               <div class="col-sm-12">
+                  <input id="FirstName" name="FirstName" type="text" class="form-control" />
+               </div>
+           </div>
+           <div class="form-group">
+               <label for="MiddleName" id="MiddleName" name="MiddleName" class="control-label">MiddleName</label>
+               <div class="col-sm-12">
+                  <input id="MiddleName" name="MiddleName" type="text" class="form-control" />
+               </div>
+           </div>
+           <div class="form-group">
+               <label for="LastName" id="LastName" name="LastName" class="control-label">LastName</label>
+               <div class="col-sm-12">
+                  <input id="LastName" name="LastName" type="text" class="form-control" />
+               </div>
+           </div>
+           <div class="form-group">
+               <label for="EmailAddress" id="EmailAddress" name="EmailAddress" class="control-label">EmailAddress</label>
+               <div class="col-sm-12">
+                  <input id="EmailAddress" name="EmailAddress" type="email" class="form-control" />
+               </div>
+           </div>
+           <div class="form-group">
+               <label for="Address" id="Address" name="Address" class="control-label">Address</label>
+               <div class="col-sm-12">
+                  <input id="Address" name="Address" type="text" class="form-control" />
+               </div>
+           </div>
+           <div class="form-group">
+               <label for="PhoneNumber" id="PhoneNumber" name="PhoneNumber" class="control-label">PhoneNumber</label>
+               <div class="col-sm-12">
+                  <input id="PhoneNumber" name="PhoneNumber" type="number" class="form-control" />
+               </div>
+           </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-outline-dark btn-lg" data-dismiss="modal">Close</button>
+               <button type="submit" class="btn btn-outline-primary btn-lg">Save</button>
+            </div>
+         }
+      </div>
+    </div>
+  </div>
+</div>
+
+@section Scripts {
+   <partial name="_ValidationScriptsPartial" />
+}

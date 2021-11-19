@@ -1,0 +1,129 @@
+@{
+   Layout = "_DashBoard";
+}
+
+@using CleverStoreManager.Models
+@using CleverStoreManager.Controllers
+@model IEnumerable<CleverStoreManager.Models.CleverStoreManagerSale>
+
+<div class="content-wrapper">
+   <section class="content-header">
+      <div class="container-fluid">
+         <div class="row mb-2">
+            <div class="col-sm-6">
+               <h1>Sales Table</h1>
+            </div>
+            <div class="col-sm-6">
+               <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item"><a asp-area="" asp-action="Index" asp-controller="DashBoard">DashBoard
+                        Home</a></li>
+                  <li class="breadcrumb-item active">Sales Table</li>
+               </ol>
+            </div>
+         </div>
+      </div>
+   </section>
+   <section class="content">
+      <div class="container-fluid">
+         <div class="row">
+            <div class="col-12">
+               <div class="card">
+                  <div class="card-header">
+                     <h2 class="card-title">Sales DataTable</h1>
+                  </div>
+                  <div class="card-body">
+                     <div class="row">
+                        <div class="col-sm-2">
+                           <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#exampleModalLong">Add Sale</button>
+                        </div>
+                        <div class="col-md-10">
+                           <div class="alert alert-info alert-dismissable">
+                              <button type="button" class="close" data-dismiss="alert"
+                                 aria-hidden="true">&times;</button><strong><i class="fas fa-info-circle"></i> Hello
+                                 Agent!</strong> Click on the Sales name for more details about that particular Sales!
+                           </div>
+                        </div>
+                     </div>
+                     <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                           <tr>
+                              <th>Id</th>
+                              <th>Product</th>
+                              <th>Customer</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           @foreach (CleverStoreManagerSale sale in Model)
+                           {
+                              <tr>
+                                 <td>@sale.Id</td>
+                                 <td>@sale.CleverStoreManagerProduct.Name</td>
+                                 <td>@sale.CleverStoreManagerCustomer.FullName</td>
+                              </tr>
+                           }
+                        </tbody>
+                        <tfoot>
+                              <tr>
+                                 <th>Id</th>
+                                 <th>Product</th>
+                                 <th>Customer</th>
+                              </tr>
+                           </tfoot>
+                     </table>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+</div>
+
+<!-- Model Call -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLongTitle">Add Sales</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        @using (Html.BeginForm("Create", "Sales", FormMethod.Post))
+        {
+           <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+           <div class="form-group">
+               <label for="CleverStoreManagerProductId" id="CleverStoreManagerProductId" name="CleverStoreManagerProductId" class="control-label">Product to Sell</label>
+               <div class="col-sm-12">
+                 @Html.DropDownList("CleverStoreManagerProductId", (IEnumerable<SelectListItem>)ViewBag.CleverStoreManagerProductId, new { @class="form-control" })
+               </div>
+           </div>
+
+           <div class="form-group">
+               <label for="CleverStoreManagerCustomerId" id="CleverStoreManagerCustomerId" name="CleverStoreManagerCustomerId" class="control-label">Customer to Sell to</label>
+               <div class="col-sm-12">
+                 @Html.DropDownList("CleverStoreManagerCustomerId", (IEnumerable<SelectListItem>)ViewBag.CleverStoreManagerCustomerId, new { @class="form-control" })
+               </div>
+           </div>
+
+
+           <div class="form-group">
+               <label for="Quantity" id="Quantity" name="Quantity" class="control-label">Quantity to sell</label>
+                  <div class="col-sm-12">
+                     <input id="Quantity" name="Quantity" type="number" class="form-control" />
+                  </div>
+           </div>
+
+            <div class="modal-footer">
+               <button type="button" class="btn btn-outline-dark btn-lg" data-dismiss="modal">Close</button>
+               <button type="submit" class="btn btn-outline-primary btn-lg">Save</button>
+            </div>
+         }
+      </div>
+    </div>
+  </div>
+</div>
+
+@section Scripts {
+   <partial name="_ValidationScriptsPartial" />
+}
