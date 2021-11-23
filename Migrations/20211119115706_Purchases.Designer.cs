@@ -3,14 +3,16 @@ using System;
 using CleverStoreManager.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CleverStoreManager.Migrations
 {
     [DbContext(typeof(CleverStoreManagerContext))]
-    partial class CleverStoreManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20211119115706_Purchases")]
+    partial class Purchases
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -253,12 +255,6 @@ namespace CleverStoreManager.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("DateToDeliver")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("Quantity")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("QuantityBulk")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
