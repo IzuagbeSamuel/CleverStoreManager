@@ -53,16 +53,22 @@ namespace CleverStoreManager.Controllers
          return View(agentPurchases);
       }
 
-      public async Task<IActionResult> Create(string DateToDeliver, string Quantity, string QuantityBulk, int CleverStoreManagerProductId, int CleverStoreManagerSellerId)
+      public async Task<IActionResult> Create(string DateToDeliver, string Quantity, string QuantityBulk, string SingleAmount, string BulkAmount, string PurchaseStatus, string ProductName, string ProductLabel, string ProductDescription, int CleverStoreManagerProductId, int CleverStoreManagerSellerId)
       {
          CleverStoreManagerPurchase purchase = new CleverStoreManagerPurchase();
          purchase.DateOrdered = DateTime.Now;
          purchase.DateToDeliver = DateToDeliver;
          purchase.Quantity = Quantity;
          purchase.QuantityBulk = QuantityBulk;
+         purchase.PurchaseStatus = PurchaseStatus;
+         purchase.SingleAmount = SingleAmount;
+         purchase.BulkAmount = BulkAmount;
+         purchase.ProductName = ProductName;
+         purchase.ProductLabel = ProductLabel;
+         purchase.ProductDescription = ProductDescription;
 
-         // purchase.CleverStoreManagerProductId = CleverStoreManagerProductId;
-         // purchase.CleverStoreManagerSellerId = CleverStoreManagerSellerId;
+         purchase.CleverStoreManagerProductId = CleverStoreManagerProductId;
+         purchase.CleverStoreManagerSellerId = CleverStoreManagerSellerId;
 
          var agentId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
          var currentAgent = await _userManager.FindByIdAsync(agentId);

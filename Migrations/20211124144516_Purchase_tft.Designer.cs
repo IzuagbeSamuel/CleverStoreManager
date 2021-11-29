@@ -3,14 +3,16 @@ using System;
 using CleverStoreManager.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CleverStoreManager.Migrations
 {
     [DbContext(typeof(CleverStoreManagerContext))]
-    partial class CleverStoreManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20211124144516_Purchase_tft")]
+    partial class Purchase_tft
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -256,15 +258,6 @@ namespace CleverStoreManager.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("DateToDeliver")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("ProductDescription")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("ProductLabel")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("ProductName")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("PurchaseStatus")

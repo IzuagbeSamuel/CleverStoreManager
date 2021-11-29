@@ -3,14 +3,16 @@ using System;
 using CleverStoreManager.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CleverStoreManager.Migrations
 {
     [DbContext(typeof(CleverStoreManagerContext))]
-    partial class CleverStoreManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20211124121251_deleteFields")]
+    partial class deleteFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -243,9 +245,6 @@ namespace CleverStoreManager.Migrations
                     b.Property<string>("AgentId")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
-                    b.Property<string>("BulkAmount")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
                     b.Property<int>("CleverStoreManagerProductId")
                         .HasColumnType("int");
 
@@ -258,25 +257,10 @@ namespace CleverStoreManager.Migrations
                     b.Property<string>("DateToDeliver")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("ProductDescription")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("ProductLabel")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("ProductName")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("PurchaseStatus")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
                     b.Property<string>("Quantity")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("QuantityBulk")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("SingleAmount")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
